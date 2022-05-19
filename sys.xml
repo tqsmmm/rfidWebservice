@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+	<mssql>Data Source=192.168.10.23;Initial Catalog=rfid2021;User ID=sanp;pwd=sanp1987~</mssql>
+	<mssql-d>Data Source=192.1.77.3;Initial Catalog=rfid2021;User ID=rfid2021;pwd=rfid2021</mssql-d>
+	<oledbmssql>Provider=SQLOLEDB;Data Source=192.168.10.23;Persist Security Info=True;User ID=sa;Password=sanp1987~;Initial Catalog=RF_Database_CZ</oledbmssql>
+	<bxUrl-d>http://10.13.37.68:7766/restMessage</bxUrl-d>
+	<bxUrl>http://192.168.10.92/simERP</bxUrl>
+	<rfidUrl>http://192.168.10.92/restMessage</rfidUrl>
+	
+</root>
