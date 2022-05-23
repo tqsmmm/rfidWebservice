@@ -35,9 +35,10 @@ namespace rfidWebservice
             Stream ReceiveStream;
             StreamReader readStream;
             int contextLength;
-            Char[] read;
+            char[] read;
             int count;
             string str;
+
             switch (serviceId.ToUpper())
             {
 
@@ -47,12 +48,12 @@ namespace rfidWebservice
                     ReceiveStream = context.Request.InputStream;
                     readStream = new StreamReader(ReceiveStream, encode);
                     contextLength = context.Request.ContentLength;
-                    read = new Char[contextLength];
+                    read = new char[contextLength];
                     count = readStream.Read(read, 0, contextLength);
                     str = null;
                     while (count > 0)
                     {
-                        str += new String(read, 0, count);
+                        str += new string(read, 0, count);
                         count = readStream.Read(read, 0, contextLength);
                     }
 
@@ -68,12 +69,13 @@ namespace rfidWebservice
                     ReceiveStream = context.Request.InputStream;
                     readStream = new StreamReader(ReceiveStream, encode);
                     contextLength = context.Request.ContentLength;
-                    read = new Char[contextLength];
+                    read = new char[contextLength];
                     count = readStream.Read(read, 0, contextLength);
                     str = null;
+
                     while (count > 0)
                     {
-                        str += new String(read, 0, count);
+                        str += new string(read, 0, count);
                         count = readStream.Read(read, 0, contextLength);
                     }
 
@@ -89,9 +91,10 @@ namespace rfidWebservice
                     ReceiveStream = context.Request.InputStream;
                     readStream = new StreamReader(ReceiveStream, encode);
                     contextLength = context.Request.ContentLength;
-                    read = new Char[contextLength];
+                    read = new char[contextLength];
                     count = readStream.Read(read, 0, contextLength);
                     str = null;
+
                     while (count > 0)
                     {
                         str += new String(read, 0, count);
@@ -151,16 +154,16 @@ namespace rfidWebservice
 
             string _msgBody = E1DV01_toJson(_deliveryId, _key);
 
-            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            Encoding encode = Encoding.GetEncoding("utf-8");
             byte[] arrB = encode.GetBytes(_msgBody);
-            System.Net.HttpWebRequest myReq = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(SysParam.rfidUrl);
+            HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(SysParam.rfidUrl);
             myReq.Method = "POST";
             myReq.ContentLength = arrB.Length;
             SetHeaderValue(myReq.Headers, "Connection", "keep-alive");
             SetHeaderValue(myReq.Headers, "ContentType", "application/json");
             SetHeaderValue(myReq.Headers, "sourceAppCode", "E1");
             SetHeaderValue(myReq.Headers, "serviceId", "E1DV01");
-            SetHeaderValue(myReq.Headers, "msgSendTime", System.DateTime.Now.ToString("yyyyMMddHHmmssfff"));
+            SetHeaderValue(myReq.Headers, "msgSendTime", DateTime.Now.ToString("yyyyMMddHHmmssfff"));
 
             try
             {
@@ -172,12 +175,12 @@ namespace rfidWebservice
                 Stream ReceiveStream = myResp.GetResponseStream();
                 StreamReader readStream = new StreamReader(ReceiveStream, encode);
                 long contentLength = myResp.ContentLength;
-                Char[] read = new Char[contentLength];
+                char[] read = new char[contentLength];
                 int count = readStream.Read(read, 0, (int)contentLength);
                 string str = null;
                 while (count > 0)
                 {
-                    str += new String(read, 0, count);
+                    str += new string(read, 0, count);
                     count = readStream.Read(read, 0, (int)contentLength);
                 }
                 int Code = Convert.ToInt32(myResp.Headers["returnCode"]);
@@ -203,7 +206,7 @@ namespace rfidWebservice
             SetHeaderValue(myReq.Headers, "ContentType", "application/json");
             SetHeaderValue(myReq.Headers, "sourceAppCode", "E1");
             SetHeaderValue(myReq.Headers, "serviceId", "E1DV02");
-            SetHeaderValue(myReq.Headers, "msgSendTime", System.DateTime.Now.ToString("yyyyMMddHHmmssfff"));
+            SetHeaderValue(myReq.Headers, "msgSendTime", DateTime.Now.ToString("yyyyMMddHHmmssfff"));
 
             try
             {
@@ -215,12 +218,12 @@ namespace rfidWebservice
                 Stream ReceiveStream = myResp.GetResponseStream();
                 StreamReader readStream = new StreamReader(ReceiveStream, encode);
                 long contentLength = myResp.ContentLength;
-                Char[] read = new Char[contentLength];
+                char[] read = new char[contentLength];
                 int count = readStream.Read(read, 0, (int)contentLength);
                 string str = null;
                 while (count > 0)
                 {
-                    str += new String(read, 0, count);
+                    str += new string(read, 0, count);
                     count = readStream.Read(read, 0, (int)contentLength);
                 }
                 int Code = Convert.ToInt32(myResp.Headers["returnCode"]);
@@ -266,12 +269,12 @@ namespace rfidWebservice
                 Stream ReceiveStream = myResp.GetResponseStream();
                 StreamReader readStream = new StreamReader(ReceiveStream, encode);
                 long contentLength = myResp.ContentLength;
-                Char[] read = new Char[contentLength];
+                char[] read = new char[contentLength];
                 int count = readStream.Read(read, 0, (int)contentLength);
                 string str = null;
                 while (count > 0)
                 {
-                    str += new String(read, 0, count);
+                    str += new string(read, 0, count);
                     count = readStream.Read(read, 0, (int)contentLength);
                 }
                 int Code = Convert.ToInt32(myResp.Headers["returnCode"]);
@@ -328,9 +331,9 @@ namespace rfidWebservice
             _table.Name = "BODY";
             _table.Columns = _columns;
 
-            _table.Rows = new List<Object>();
+            _table.Rows = new List<object>();
 
-            List<Object> _rowItems = new List<Object>();
+            List<object> _rowItems = new List<object>();
             _rowItems.Add("代码11");
             _rowItems.Add("名称1122");
             _rowItems.Add("短描述1122");
@@ -390,11 +393,11 @@ namespace rfidWebservice
             _table.Name = "BODY";
             _table.Columns = _columns;
 
-            _table.Rows = new List<Object>();
+            _table.Rows = new List<object>();
 
             for(int i = 0; i < 30; i++)
             {
-                List<Object> _rowItems = new List<Object>();
+                List<object> _rowItems = new List<object>();
                 _rowItems.Add("姓名" + i);
                 _rowItems.Add("工号" + i);
                 _rowItems.Add("岗位编码" + i);

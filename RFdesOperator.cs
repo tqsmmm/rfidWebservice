@@ -106,22 +106,22 @@ namespace rfidWebservice
 		/// <param name="encryptKey">密钥</param> 
 		public void DesEncrypt()
 		{
-			byte[] byKey = null;
-			byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+            byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+
 			try
 			{
-				byKey = System.Text.Encoding.UTF8.GetBytes(this.encryptKey.Substring(0, 8));
-				DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-				byte[] inputByteArray = Encoding.UTF8.GetBytes(this.inputString);
+                byte[] byKey = System.Text.Encoding.UTF8.GetBytes(encryptKey.Substring(0, 8));
+                DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+				byte[] inputByteArray = Encoding.UTF8.GetBytes(inputString);
 				MemoryStream ms = new MemoryStream();
 				CryptoStream cs = new CryptoStream(ms, des.CreateEncryptor(byKey, IV), CryptoStreamMode.Write);
 				cs.Write(inputByteArray, 0, inputByteArray.Length);
 				cs.FlushFinalBlock();
-				this.outString = Convert.ToBase64String(ms.ToArray());
+				outString = Convert.ToBase64String(ms.ToArray());
 			}
-			catch (System.Exception error)
+			catch (Exception error)
 			{
-				this.noteMessage = error.Message;
+				noteMessage = error.Message;
 			}
 		}
 
@@ -136,24 +136,24 @@ namespace rfidWebservice
 		/// <param name="decryptKey">密钥</param>
 		public void DesDecrypt()
 		{
-			byte[] byKey = null;
-			byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
-			byte[] inputByteArray = new Byte[this.inputString.Length];
+            byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
+			byte[] inputByteArray = new byte[inputString.Length];
+
 			try
 			{
-				byKey = System.Text.Encoding.UTF8.GetBytes(decryptKey.Substring(0, 8));
-				DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-				inputByteArray = Convert.FromBase64String(this.inputString);
+                byte[] byKey = Encoding.UTF8.GetBytes(decryptKey.Substring(0, 8));
+                DESCryptoServiceProvider des = new DESCryptoServiceProvider();
+				inputByteArray = Convert.FromBase64String(inputString);
 				MemoryStream ms = new MemoryStream();
 				CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(byKey, IV), CryptoStreamMode.Write);
 				cs.Write(inputByteArray, 0, inputByteArray.Length);
 				cs.FlushFinalBlock();
-				System.Text.Encoding encoding = new System.Text.UTF8Encoding();
-				this.outString = encoding.GetString(ms.ToArray());
+                Encoding encoding = new UTF8Encoding();
+				outString = encoding.GetString(ms.ToArray());
 			}
-			catch (System.Exception error)
+			catch (Exception error)
 			{
-				this.noteMessage = error.Message;
+				noteMessage = error.Message;
 			}
 		}
 
@@ -169,8 +169,8 @@ namespace rfidWebservice
 		public void MD5Encrypt()
 		{
 			MD5 md5 = new MD5CryptoServiceProvider();
-			byte[] result = md5.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.inputString));
-			this.outString = System.Text.Encoding.UTF8.GetString(result);
+			byte[] result = md5.ComputeHash(Encoding.UTF8.GetBytes(inputString));
+			outString = Encoding.UTF8.GetString(result);
 		}
 
 		public static string getMd5Hash(string input)

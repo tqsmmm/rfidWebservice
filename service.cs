@@ -19,7 +19,7 @@ namespace rfidWebservice
         public MessagePack recMsgToDataSet(string _msgName, string _json, out System.Data.DataSet _ds, out string _key)
         {
             _key = "";
-            _ds = new System.Data.DataSet();
+            _ds = new DataSet();
             MessagePack _mp = new MessagePack();
             try
             {
@@ -34,7 +34,7 @@ namespace rfidWebservice
 
                 foreach(bxMessage.bxMsgTables _jsonDt in _msg.Tables)
                 {
-                    System.Data.DataTable _dt = new System.Data.DataTable();
+                    DataTable _dt = new DataTable();
                     _dt.TableName = _msgName + "," + _jsonDt.Name;
 
                     foreach (bxMessage.bxMsgTablesColumns _msgCol in _jsonDt.Columns)
@@ -43,7 +43,7 @@ namespace rfidWebservice
                         if (_msgCol.DataType.Equals("N"))
                             _type = typeof(float);
 
-                        System.Data.DataColumn _col = new System.Data.DataColumn(_msgCol.Name, _type);
+                        DataColumn _col = new DataColumn(_msgCol.Name, _type);
                         _col.Caption = _msgCol.Caption;
                         _dt.Columns.Add(_col);
                     }
@@ -61,7 +61,7 @@ namespace rfidWebservice
                             return _mp;
                         }
 
-                        System.Data.DataRow _row = _dt.NewRow();
+                        DataRow _row = _dt.NewRow();
 
                         for (int columnIndex = 0; columnIndex < columnsCount; columnIndex++)
                         {
@@ -72,28 +72,28 @@ namespace rfidWebservice
                     _ds.Tables.Add(_dt);
                 }
 
-                System.Data.DataTable _dtInfo = new System.Data.DataTable();
+                DataTable _dtInfo = new DataTable();
                 _dtInfo.TableName = "SysInfo";
-                System.Data.DataColumn _col1 = new System.Data.DataColumn("Flag", typeof(int));
+                DataColumn _col1 = new DataColumn("Flag", typeof(int));
                 _dtInfo.Columns.Add(_col1);
-                _col1 = new System.Data.DataColumn("Msg", typeof(string));
+                _col1 = new DataColumn("Msg", typeof(string));
                 _dtInfo.Columns.Add(_col1);
-                _col1 = new System.Data.DataColumn("Key", typeof(string));
+                _col1 = new DataColumn("Key", typeof(string));
                 _dtInfo.Columns.Add(_col1);
 
-                System.Data.DataRow _row1 = _dtInfo.NewRow();
+                DataRow _row1 = _dtInfo.NewRow();
                 _row1[0] = _msg.SysInfo.Flag;
+
                 if (_msg.SysInfo.Msg.Length> 32)
                     _row1[1] = _msg.SysInfo.Msg.Substring(33);
                 else
                     _row1[1] = _msg.SysInfo.Msg;
+
                 _dtInfo.Rows.Add(_row1);
 
                 _ds.Tables.Add(_dtInfo);
 
-
                 _key = _msg.SysInfo.Msg.Substring(0, 32);
-
 
                 _mp.Code = 0;
                 _mp.Message = "接收到的报文，数据转换成功";
@@ -152,9 +152,9 @@ namespace rfidWebservice
 
             try
             {
-                foreach(System.Data.DataTable _dsTable in _inDs.Tables)
+                foreach(DataTable _dsTable in _inDs.Tables)
                 {
-                    foreach (System.Data.DataColumn _dsCol in _dsTable.Columns)
+                    foreach (DataColumn _dsCol in _dsTable.Columns)
                     {
                         bxMessage.bxMsgTablesColumns _column = new bxMessage.bxMsgTablesColumns();
                         _column.Caption = _dsCol.Caption;
@@ -166,10 +166,12 @@ namespace rfidWebservice
                         _columns.Add(_column);
                     }
 
-                    _table.Rows = new List<Object>();
-                    foreach (System.Data.DataRow _dr in _dsTable.Rows)
+                    _table.Rows = new List<object>();
+
+                    foreach (DataRow _dr in _dsTable.Rows)
                     {
-                        List<Object> _rowItems = new List<Object>();
+                        List<object> _rowItems = new List<object>();
+
                         for (int rowIndex = 0; rowIndex < _dr.ItemArray.Length; rowIndex++)
                         {
                             _rowItems.Add(_dr[rowIndex]);
@@ -214,6 +216,7 @@ namespace rfidWebservice
         {
             MessagePack pack = new MessagePack();
             string serviceId = "E1DV01";
+
             try
             {
                 if (_recDs.Tables["SysInfo"].Rows[0]["Flag"].ToString().Equals("-1"))
@@ -235,12 +238,15 @@ namespace rfidWebservice
                         string sql = "insert into RF_Database_CZ.dbo.bx_deliveryLine(deliveryLineId, itemId) values('" + _deliveryLineId + "', '" + _itemId + "')";
 
                         string sql2 = "update RF_Database_CZ.dbo.bx_deliveryLine set ";
+
                         foreach (DataColumn dc in _recDs.Tables[0].Columns)
                         {
                             sql2 =sql2 +  dc.ColumnName + " = '"+ dr[dc.ColumnName].ToString() + "', ";
                         }
+
                         sql2 = sql2.Substring(0, sql2.Length - 2) + " where deliveryLineId = '"+ _deliveryLineId + "' and itemId = '"+ _itemId + "'";
                         _ado.ExecuteNonQuery(sql);
+
                         if (_ado.ExecuteNonQuery(sql2) < 0)
                         {
                             pack.Code = -1;
@@ -293,11 +299,14 @@ namespace rfidWebservice
 
 
                         string sql2 = "update RF_Database_CZ.dbo.bx_deliveryLine set ";
+
                         foreach (DataColumn dc in _recDs.Tables[0].Columns)
                         {
                             sql2 = sql2 + dc.ColumnName + " = '" + dr[dc.ColumnName].ToString() + "', ";
                         }
+
                         sql2 = sql2.Substring(0, sql2.Length - 2) + " where deliveryLineId = '" + _deliveryLineId + "'";
+
                         if (_ado.ExecuteNonQuery(sql2) < 0)
                         {
                             pack.Code = -1;

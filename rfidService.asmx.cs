@@ -25,7 +25,7 @@ namespace rfidWebservice
         {
             MessagePack _mp = new MessagePack();
 
-            Encoding encode = System.Text.Encoding.GetEncoding("utf-8");
+            Encoding encode = Encoding.GetEncoding("utf-8");
             byte[] arrB = encode.GetBytes(msgBody);
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(SysParam.bxUrl);
             myReq.Method = "POST";
@@ -57,7 +57,7 @@ namespace rfidWebservice
                     StreamReader readStream = new StreamReader(ReceiveStream, encode);
 
                     long contentLength = myResp.ContentLength;
-                    Char[] read = new Char[contentLength];
+                    char[] read = new char[contentLength];
 
                     int count = readStream.Read(read, 0, (int)contentLength);
                     string str = null;
@@ -65,7 +65,7 @@ namespace rfidWebservice
 
                     while (count > 0)
                     {
-                        str += new String(read, 0, count);
+                        str += new string(read, 0, count);
                         count = readStream.Read(read, 0, (int)contentLength);
                     }
                     _mp.Code = Convert.ToInt32(myResp.Headers["returnCode"]);
@@ -375,8 +375,7 @@ namespace rfidWebservice
         [WebMethod]
         public MessagePack sendMsgNotOut(string _serviceid, string _BxUserID, string _BxUserName, string _BxJobID, DataSet _inDs)
         {
-            DataSet _outDs;
-            return sendMsg(_serviceid, _BxUserID, _BxUserName, _BxJobID, _inDs, out _outDs);
+            return sendMsg(_serviceid, _BxUserID, _BxUserName, _BxJobID, _inDs, out DataSet _outDs);
         }
 
         /// <summary>
@@ -414,7 +413,6 @@ namespace rfidWebservice
         [WebMethod]
         public MessagePack getInvPhysic(out DataSet _outDs)
         {
-            _outDs = null;
             MessagePack pack = new MessagePack();
 
             if (!bus.getInv(out _outDs))
@@ -433,7 +431,6 @@ namespace rfidWebservice
         [WebMethod]
         public MessagePack getBxUsers(out DataSet _outDs)
         {
-            _outDs = null;
             MessagePack pack = new MessagePack();
 
             if (!bus.getBxUsers(out _outDs))
@@ -458,7 +455,6 @@ namespace rfidWebservice
         [WebMethod]
         public MessagePack getPrint(out DataSet _outDs)
         {
-            _outDs = null;
             MessagePack pack = new MessagePack();
 
             if (!bus.getPrint(out _outDs))
@@ -477,7 +473,6 @@ namespace rfidWebservice
         [WebMethod]
         public MessagePack getWarehouse(out DataSet _outDs)
         {
-            _outDs = null;
             MessagePack pack = new MessagePack();
 
             if (!bus.getWarehouse(out _outDs))
@@ -496,7 +491,6 @@ namespace rfidWebservice
         [WebMethod]
         public MessagePack getShiperReceiver(out DataSet _outDs)
         {
-            _outDs = null;
             MessagePack pack = new MessagePack();
 
             if (!bus.getShiperReceiver(out _outDs))
