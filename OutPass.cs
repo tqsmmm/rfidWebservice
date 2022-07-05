@@ -48,7 +48,7 @@
 			SapUser = "";
 			ErrMsg = "";
 			data.ado _ado = new data.ado();
-			System.Data.DataTable dt = new System.Data.DataTable();
+            System.Data.DataTable dt = new System.Data.DataTable();
 
 			if (_ado.ExecuteQuery("select * from RF_M_SapUser,RF_Users where user_ID= '"+ DbUser + "' and inEffect=1 and SapUserID=SapRolePoint", out dt)<1)
 			{

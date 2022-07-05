@@ -104,9 +104,7 @@ namespace rfidWebservice
                                 pub.WriteLog("restMessage.ProcessRequest()", "接收到 " + serviceId + "报文，保存数据库失败。");
                             }
 
-                            string _key;
-
-                            _mp = _svc.recMsgToDataSet(serviceId.ToUpper(), str, out _ds, out _key);
+                            _mp = _svc.recMsgToDataSet(serviceId.ToUpper(), str, out _ds, out string _key);
 
                             pub.WriteLog("调试，收到 " + serviceId + " 报文", "处理 " + serviceId + " 报文结果：" + _mp.Result + ";" + _mp.Message);
 
@@ -118,13 +116,6 @@ namespace rfidWebservice
                             else
                             {
                                 string sId = serviceId.ToUpper();
-                                /*
-                                try
-                                {
-                                    _ds.WriteXml(@"d:\log\" + sId + "-" + System.DateTime.Now.ToString("yyyyMMddHHmmssfff"));
-                                }
-                                catch { }
-                                */
 
                                 string[] strService = new string[]{"E1DV01", "E1DV02", "E1DV03", "E1DV04", "E1DV05", "E1DV06",
                                     "E1DV07","E1DV08","E1DV09","E1DV10","E1DV11","E1DV12","E1DV17","E1DV18","E1DV19","E1DV20",
@@ -175,9 +166,9 @@ namespace rfidWebservice
             }
 
             pub.WriteLog("调试--ProcessRequest", "准备返回消息应答");
+
             try
             {
-                //context.Response.Headers.Add("returnCode", returnCode);
                 context.Response.AddHeader("returnCode", returnCode);
                 context.Response.Write(returnContent);
 

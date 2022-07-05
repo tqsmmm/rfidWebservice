@@ -44,10 +44,11 @@ namespace rfidWebservice.data
 
         public int ExecuteQuery(string sqlText, out System.Data.DataTable dt)
         {
-            int ret = -1;
             sql_cmd.CommandText = sqlText;
             sql_da = new SqlDataAdapter(sql_cmd);
             dt = new System.Data.DataTable("returnDataTable");
+
+            int ret;
 
             try
             {
@@ -139,11 +140,13 @@ namespace rfidWebservice.data
 
             return ret;
         }
+
         public int ExecuteQuery(string sqlText, List<Sqlparameter> parameter, out System.Data.DataTable dt)
         {
-            int ret = -1;
             sql_cmd.CommandText = sqlText;
             dt = new System.Data.DataTable("returnDataTable");
+
+            int ret;
 
             try
             {

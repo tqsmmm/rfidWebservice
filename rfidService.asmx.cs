@@ -123,9 +123,8 @@ namespace rfidWebservice
                 _dr["jobId"] = _BxJobID;
             }
 
-            string _json;
 
-            _mp = _svr.sendMsgToJson(_serviceid, _key,  _inDs, out _json);
+            _mp = _svr.sendMsgToJson(_serviceid, _key, _inDs, out string _json);
 
             if (!_mp.Result)
             {
@@ -207,10 +206,10 @@ namespace rfidWebservice
                                 _mp = _svr.recE1DV12(_recDs);
                                 break;
                             case "E1DV17":
-                                _mp = _svr.recE1DV17( _recDs);
+                                _mp = _svr.recE1DV17(_recDs);
                                 break;
                             case "E1DV18":
-                                _mp = _svr.recE1DV18( _recDs);
+                                _mp = _svr.recE1DV18(_recDs);
                                 break;
                             case "E1DV19":
                                 _mp = _svr.recE1DV19(_inDs, _recDs);
@@ -258,7 +257,7 @@ namespace rfidWebservice
                                 _mp = _svr.recE1DV31(_recDs);
                                 break;
                             case "E1DV37":
-                                _mp = _svr.recE1DV37( _recDs);
+                                _mp = _svr.recE1DV37(_recDs);
                                 break;
                             case "E1DV38":
                                 _mp = _svr.recE1DV38(_recDs);
@@ -390,9 +389,8 @@ namespace rfidWebservice
             MessagePack pack = new MessagePack();
             PrivateStr = new privilidge();
             DbConnStr = "";
-            string ErrMsg;
 
-            if (0 != bus.Login(_username, _password, out BxUserID,out BxUserName, out BxJobId, out PrivateStr, out ErrMsg))
+            if (0 != bus.Login(_username, _password, out BxUserID, out BxUserName, out BxJobId, out PrivateStr, out string ErrMsg))
             {
                 pack.Code = -1;
                 pack.Message = ErrMsg;

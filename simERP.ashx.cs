@@ -97,7 +97,7 @@ namespace rfidWebservice
 
                     while (count > 0)
                     {
-                        str += new String(read, 0, count);
+                        str += new string(read, 0, count);
                         count = readStream.Read(read, 0, contextLength);
                     }
 
@@ -135,7 +135,6 @@ namespace rfidWebservice
                 case "DVE110":
                     //模拟DVE110
                     break;
-
             }
 
             context.Response.AddHeader("returnCode", returnCode);
@@ -145,9 +144,8 @@ namespace rfidWebservice
         private void sendE1DV01(string _recMsg)
         {
             service _s = new service();
-            string _deliveryId;
-            string _key;
-            bool _r = recMsgtoObject_sim(_recMsg, out _deliveryId, out _key);
+
+            bool _r = recMsgtoObject_sim(_recMsg, out string _deliveryId, out string _key);
 
             if (!_r)
                 return;
@@ -195,10 +193,9 @@ namespace rfidWebservice
         private void sendE1DV02(string _recMsg)
         {
             service _s = new service();
-            string _msgBody = _recMsg;
 
             Encoding encode = Encoding.GetEncoding("utf-8");
-            byte[] arrB = encode.GetBytes(_msgBody);
+            byte[] arrB = encode.GetBytes(_recMsg);
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(SysParam.rfidUrl);
             myReq.Method = "POST";
             myReq.ContentLength = arrB.Length;
@@ -239,9 +236,8 @@ namespace rfidWebservice
         private void sendE1DV30(string _recMsg)
         {
             service _s = new service();
-            string _deliveryId;
-            string _key;
-            bool _r = recMsgtoObject_sim(_recMsg, out _deliveryId, out _key);
+
+            bool _r = recMsgtoObject_sim(_recMsg, out string _deliveryId, out string _key);
 
             if (!_r)
                 return;
@@ -257,7 +253,7 @@ namespace rfidWebservice
             SetHeaderValue(myReq.Headers, "ContentType", "application/json");
             SetHeaderValue(myReq.Headers, "sourceAppCode", "E1");
             SetHeaderValue(myReq.Headers, "serviceId", "E1DV30");
-            SetHeaderValue(myReq.Headers, "msgSendTime", System.DateTime.Now.ToString("yyyyMMddHHmmssfff"));
+            SetHeaderValue(myReq.Headers, "msgSendTime", DateTime.Now.ToString("yyyyMMddHHmmssfff"));
 
             try
             {
@@ -292,6 +288,7 @@ namespace rfidWebservice
         {
             var property = typeof(WebHeaderCollection).GetProperty("InnerCollection",
                 System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
             if (property != null)
             {
                 var collection = property.GetValue(header, null) as System.Collections.Specialized.NameValueCollection;
@@ -424,6 +421,7 @@ namespace rfidWebservice
         {
             _outStr = null;
             _key = "";
+
             try
             {
                 bxMessage.bxMsg _msg = JsonConvert.DeserializeObject<bxMessage.bxMsg>(_json);

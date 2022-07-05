@@ -7,15 +7,15 @@ namespace rfidWebservice
 {
     public class pub
     {
-        public static Decimal ChangeToDecimal(string strData)
+        public static decimal ChangeToDecimal(string strData)
         {
-            Decimal dData = 0.0M;
+            decimal dData;
 
             try
             {
                 if (strData.Contains("E"))
                 {
-                    dData = Convert.ToDecimal(Decimal.Parse(strData.ToString(), System.Globalization.NumberStyles.Float));
+                    dData = Convert.ToDecimal(decimal.Parse(strData.ToString(), System.Globalization.NumberStyles.Float));
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace rfidWebservice
                 }
 
                 strFilePath += "LOG" + Date() + ".log";
-                System.IO.StreamWriter LogWriter = new System.IO.StreamWriter(strFilePath, true, System.Text.Encoding.Default);
+                System.IO.StreamWriter LogWriter = new System.IO.StreamWriter(strFilePath, true, Encoding.Default);
                 string strToLog = string.Empty;
                 strToLog += DateTime() + "  [" + stype + "] " + "\r\n" + strLog + " \r\n" + "----------------------------------------------------------" + "\r\n";
                 LogWriter.Write(strToLog);
@@ -88,7 +88,7 @@ namespace rfidWebservice
                 }
 
                 strFilePath += "ERR" + Date() + ".log";
-                System.IO.StreamWriter LogWriter = new System.IO.StreamWriter(strFilePath, true, System.Text.Encoding.Default);
+                System.IO.StreamWriter LogWriter = new System.IO.StreamWriter(strFilePath, true, Encoding.Default);
                 string strToLog = string.Empty;
                 strToLog += DateTime() + "  [错误] " + "\r\n" + strLog + " \r\n" + "----------------------------------------------------------" + "\r\n";
                 LogWriter.Write(strToLog);

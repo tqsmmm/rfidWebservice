@@ -560,12 +560,16 @@ namespace rfidWebservice
                         string sql = "insert into RF_Database_CZ.dbo.bx_transaction(transactionId) values('" + _transactionId + "')";
 
                         string sql2 = "update RF_Database_CZ.dbo.bx_transaction set ";
+
                         foreach (DataColumn dc in _recDs.Tables[0].Columns)
                         {
                             sql2 = sql2 + dc.ColumnName + " = '" + dr[dc.ColumnName].ToString() + "', ";
                         }
+
                         sql2 = sql2.Substring(0, sql2.Length - 2) + " where transactionId = '" + _transactionId + "'";
+
                         _ado.ExecuteNonQuery(sql);
+
                         if (_ado.ExecuteNonQuery(sql2) < 0)
                         {
                             pack.Code = -1;
@@ -574,7 +578,6 @@ namespace rfidWebservice
                             return pack;
                         }
                     }
-
 
                     #endregion
 
@@ -1596,6 +1599,7 @@ namespace rfidWebservice
                     pack.Code = -1;
                     pack.Result = false;
                     pack.Message = _recDs.Tables["SysInfo"].Rows[0]["Msg"].ToString();
+
                     return pack;
                 }
                 else
@@ -1606,6 +1610,7 @@ namespace rfidWebservice
                     {
                         sql += dc.ColumnName + ", ";
                     }
+
                     sql = sql.Substring(0, sql.Length - 2) + ")";
 
                     List<string> listSql = new List<string>();
@@ -1614,14 +1619,16 @@ namespace rfidWebservice
 
                     foreach (DataRow dr in _recDs.Tables[0].Rows)
                     {
-                        string sql2 = sql + " values('" + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', ";
+                        string sql2 = sql + " values('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', ";
                         for (int index = 0; index < dr.ItemArray.Length; index++)
                             sql2 += "'" + dr[index].ToString() + "', ";
 
                         sql2 = sql2.Substring(0, sql2.Length - 2) + ")";
                         listSql.Add(sql2);
                     }
+
                     data.ado _ado = new data.ado();
+
                     if (_ado.ExecuteNonQuery(listSql) < 0)
                     {
                         pack.Code = -1;
@@ -1629,6 +1636,7 @@ namespace rfidWebservice
                         pack.Message = "本地数据保存错误";
                         return pack;
                     }
+
                     pack.Code = 1;
                     pack.Result = true;
                 }
@@ -1679,7 +1687,7 @@ namespace rfidWebservice
 
                     foreach (DataRow dr in _recDs.Tables[0].Rows)
                     {
-                        string sql2 = sql + " values('" + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', ";
+                        string sql2 = sql + " values('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "', ";
                         for (int index = 0; index < dr.ItemArray.Length; index++)
                             sql2 += "'" + dr[index].ToString() + "', ";
 
@@ -1915,6 +1923,7 @@ namespace rfidWebservice
                     {
                         string _deliveryLineId = dr["deliveryLineId"].ToString();
                         string sql2 = "update RF_Database_CZ.dbo.bx_deliveryLine set ";
+
                         foreach (DataColumn dc in _sendDs.Tables[0].Columns)
                         {
                             if (dc.ColumnName.Equals("userId")) continue;
@@ -1922,7 +1931,9 @@ namespace rfidWebservice
                             if (dc.ColumnName.Equals("jobId")) continue;
                             sql2 = sql2 + dc.ColumnName + " = '" + dr[dc.ColumnName].ToString() + "', ";
                         }
+
                         sql2 = sql2.Substring(0, sql2.Length - 2) + " where deliveryLineId = '" + _deliveryLineId + "'";
+
                         if (_ado.ExecuteNonQuery(sql2) < 0)
                         {
                             pack.Code = -1;

@@ -137,7 +137,7 @@ namespace rfidWebservice
 		public void DesDecrypt()
 		{
             byte[] IV = { 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF };
-			byte[] inputByteArray = new byte[inputString.Length];
+            byte[] inputByteArray = new byte[inputString.Length];
 
 			try
 			{

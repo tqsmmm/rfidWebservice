@@ -289,10 +289,9 @@ namespace rfidWebservice
         public bool getInv(out DataSet ds)
         {
             data.ado _ado = new data.ado();
-            DataTable dt1;
             ds = null;
 
-            if (_ado.ExecuteQuery("SELECT * from bx_E1DV31", out dt1) < 1)
+            if (_ado.ExecuteQuery("SELECT * from bx_E1DV31", out DataTable dt1) < 1)
             {
                 return false;
             }
@@ -307,10 +306,9 @@ namespace rfidWebservice
         public bool getBxUsers(out DataSet ds)
         {
             data.ado _ado = new data.ado();
-            DataTable dt1;
             ds = null;
 
-            if (_ado.ExecuteQuery("SELECT * from bx_E1DV30", out dt1) < 1)
+            if (_ado.ExecuteQuery("SELECT * from bx_E1DV30", out DataTable dt1) < 1)
             {
                 return false;
             }
@@ -325,10 +323,9 @@ namespace rfidWebservice
         public bool getPrint(out DataSet ds)
         {
             data.ado _ado = new data.ado();
-            DataTable dt1;
             ds = null;
 
-            if (_ado.ExecuteQuery("SELECT * from RF_Database_CZ.dbo.RF_M_Printer", out dt1) < 1)
+            if (_ado.ExecuteQuery("SELECT * from RF_Database_CZ.dbo.RF_M_Printer", out DataTable dt1) < 1)
             {
                 return false;
             }
@@ -343,10 +340,9 @@ namespace rfidWebservice
         public bool getWarehouse(out DataSet ds)
         {
             data.ado _ado = new data.ado();
-            DataTable dt1;
             ds = null;
 
-            if (_ado.ExecuteQuery("SELECT * from bx_Warehouse", out dt1) < 1)
+            if (_ado.ExecuteQuery("SELECT * from bx_Warehouse", out DataTable dt1) < 1)
             {
                 return false;
             }
@@ -361,10 +357,9 @@ namespace rfidWebservice
         public bool getShiperReceiver(out DataSet ds)
         {
             data.ado _ado = new data.ado();
-            DataTable dt1;
             ds = null;
 
-            if (_ado.ExecuteQuery("SELECT * from bx_ShiperReceiver", out dt1) < 1)
+            if (_ado.ExecuteQuery("SELECT * from bx_ShiperReceiver", out DataTable dt1) < 1)
             {
                 return false;
             }

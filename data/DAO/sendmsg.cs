@@ -48,7 +48,7 @@ namespace rfidWebservice.data.DAO
                 return _mp;
             }
 
-            string sqlstr = "";
+            string sqlstr;
 
             if (id == 0)
             {
@@ -70,7 +70,7 @@ namespace rfidWebservice.data.DAO
 
             ado _ado = new ado();
 
-            if (_ado.ExecuteNonQuery(sqlstr, parameter)<1)
+            if (_ado.ExecuteNonQuery(sqlstr, parameter) < 1)
             {
                 _mp.Result = false;
                 _mp.Code = -1;
